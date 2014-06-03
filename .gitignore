@@ -1,0 +1,11 @@
+# dlls
+[Oo]bj/
+[Bb]in
+[Dd]ebug*/
+[Rr]elease*/
+
+src/packages/
+
+#MonoDevelop
+*.pidb
+*.userprefs

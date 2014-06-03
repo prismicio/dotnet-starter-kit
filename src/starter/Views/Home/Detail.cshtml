@@ -1,0 +1,7 @@
+﻿@using prismic
+@model prismic.mvc.starter.PrismicDocument
+
+<article id="@Model.Document.id">
+  @Html.Raw(Model.DocumentAsHtml)
+</article>
+

@@ -1,0 +1,41 @@
+﻿@using prismic.extensions
+@model prismic.mvc.starter.PrismicSearchResponse
+@{string refId = Model.Context.MaybeRef.GetOrElse(null);}
+
+<h2>
+	@switch (Model.Response.resultsSize)
+	{
+	    case 0: @:No documents found
+	    break;
+	    case 1: @:One document found
+	    break;
+	    default: @:Showing @Model.Response.resultsSize out of @Model.Response.totalResultsSize documents
+	    break;
+	}
+  </h2>
+  <ul>
+  	@foreach (var document in Model.Response.results) {
+  	<li>
+        <a href="@Model.Context.ResolveLink(document)">@document.slug</a>
+    </li>
+  	}
+  </ul>
+
+  @if(Model.Response.totalPages > 1) {
+    <div>
+      @if(Model.Response.prevPage.Exists()) {
+      	@Html.ActionLink("Previous", "Index", new { q = Model.Query, refId, page = Model.Response.page - 1 })
+      } else {
+      <span>Previous</span>
+      }
+      @if(Model.Response.nextPage.Exists()) {
+      	@Html.ActionLink("Next", "Index", new { q = Model.Query, refId, page = Model.Response.page + 1 })
+      } else {
+      <span>Next</span>
+      }
+    </div>
+  }
+
+  <p>
+  	@Html.ActionLink("Back to home", "Index", new { refId })
+  </p>

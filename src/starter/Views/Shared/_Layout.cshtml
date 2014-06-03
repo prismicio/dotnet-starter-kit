@@ -1,0 +1,28 @@
+﻿@using prismic.extensions
+@model prismic.mvc.starter.PrismicViewModel
+@{string refId = Model.Context.MaybeRef.Exists() ? Model.Context.MaybeRef.Value : null;}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" media="screen" href="@Url.Content("~/Content/main.css")" />
+    <link rel="shortcut icon" type="image/png" href="@Url.Content("~/Content/favicon.png")" />
+    <script src="@Url.Content("~/Scripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+     
+</head>
+<body>
+	<header>		
+		@{Html.RenderPartial("Toolbar");}
+		<h1>@Html.ActionLink("Your prismic.io project", "Index", new { refId })</h1>
+	</header>
+	@RenderBody()
+	<footer>
+		@if(!@Model.Context.HasPrivilegedAccess) {
+		<hr /> @Html.ActionLink("Sign in to preview changes", "Signin") 
+		}
+	</footer>
+</body>
+</html>
+
+

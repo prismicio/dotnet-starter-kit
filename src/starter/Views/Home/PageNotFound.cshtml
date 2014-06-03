@@ -1,0 +1,16 @@
+﻿@using prismic.extensions
+@model prismic.mvc.starter.PrismicViewModel
+
+	<section>
+		<h1>Page not found</h1>
+	</section>
+
+	<section>
+		<p>
+			We can't seem to find what you are looking for.
+		</p>
+
+		<p>
+			@Html.ActionLink("Go to the home page", "Index", new { refId = Model.Context.MaybeRef.GetOrElse(null) })
+		</p>
+	</section>

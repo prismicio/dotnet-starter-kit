@@ -1,0 +1,29 @@
+﻿@using prismic.extensions
+@model prismic.mvc.starter.PrismicViewModel
+@{string refId = Model.Context.MaybeRef.GetOrElse(null);}
+
+@if(Model.Context.HasPrivilegedAccess) {
+  <div id="toolbar">
+
+    <form method="GET">
+      <label for="releaseSelector">See this website: </label>
+      <select id="releaseSelector" name="refId" onchange="this.form.submit()">
+        @if(!Model.Context.Api.Refs.Any(r => refId == r.Value.refId)) {
+          <option>?</option>
+        }
+        <option value="" @(refId == Model.Context.Api.Master.refId ? "selected" : "")>As currently seen by guest visitors</option>
+        <optgroup label="Or preview the website in a future release:">
+    	@foreach (var r in Model.Context.FutureReleasesRefs) {
+    		<option value="@r.refId" @(refId == r.refId ? "selected" : "")>As @r.label @r.scheduledAt.Map(s => s.ToString("yyyy-MM-dd")).GetOrElse("")</option>
+    	}
+        </optgroup>
+
+      </select>
+    </form>
+
+	@using (Html.BeginForm("Signout", "Home", null, FormMethod.Post )){
+    <input type="submit" value="Disconnect" />
+	}
+  </div>
+}
+
