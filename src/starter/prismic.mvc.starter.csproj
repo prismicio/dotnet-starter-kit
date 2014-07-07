@@ -68,10 +68,10 @@
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="prismic">
-      <HintPath>..\packages\prismic.1.0.2\lib\net40\prismic.dll</HintPath>
+      <HintPath>..\packages\prismic.1.0.4\lib\net40\prismic.dll</HintPath>
     </Reference>
     <Reference Include="prismic.extensions">
-      <HintPath>..\packages\prismic.1.0.2\lib\net40\prismic.extensions.dll</HintPath>
+      <HintPath>..\packages\prismic.1.0.4\lib\net40\prismic.extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
