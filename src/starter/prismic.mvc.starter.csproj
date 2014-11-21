@@ -74,9 +74,6 @@
     <Reference Include="FSharp.Core">
       <HintPath>..\prismic.starter\FSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="prismicio">
-      <HintPath>..\packages\prismicio.1.0.7\lib\net45\prismicio.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Runtime.Caching" />
@@ -84,6 +81,10 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="prismicio">
+      <HintPath>..\packages\prismicio.1.0.8\lib\net45\prismicio.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

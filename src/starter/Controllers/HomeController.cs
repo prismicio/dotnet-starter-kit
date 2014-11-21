@@ -29,13 +29,12 @@ namespace prismic.mvc.starter.Controllers
 				.Submit (); 
 
 			var document = futureResponse.Result.Results.FirstOrDefault ();
-			if (document != null && document.Slugs[0] == slug) {
+			if (document != null && document.Slug == slug) {
 				ViewBag.Title = "Document detail " + slug;
 				return View (new PrismicDocument (ctx, document));
 			}
 			else if (document != null && document.Slugs.Contains(slug)) {
-				string s = document.Slugs[0];
-				return RedirectToActionPermanent ("Detail", new { id, s, refId });
+				return RedirectToActionPermanent ("Detail", new { id, document.Slug, refId });
 			} else {
 				ViewBag.Title = "Document not found";
 				this.Response.StatusCode = 404;

@@ -16,7 +16,7 @@
   <ul>
   	@foreach (var document in Model.Response.Results) {
   	<li>
-        <a href="@Model.Context.ResolveLink(document)">@document.Slugs[0]</a>
+        <a href="@Model.Context.ResolveLink(document)">@document.Slug</a>
     </li>
   	}
   </ul>
@@ -24,12 +24,12 @@
   @if(Model.Response.TotalPages > 1) {
     <div>
       @if(Model.Response.PrevPage != null) {
-      	@Html.ActionLink("Previous", "Index", new { q = Model.Query, refId, page = Model.Response.getPage() - 1 })
+      	@Html.ActionLink("Previous", "Index", new { q = Model.Query, refId, page = Model.Response.Page - 1 })
       } else {
       <span>Previous</span>
       }
       @if(Model.Response.NextPage != null) {
-      	@Html.ActionLink("Next", "Index", new { q = Model.Query, refId, page = Model.Response.getPage() + 1 })
+      	@Html.ActionLink("Next", "Index", new { q = Model.Query, refId, page = Model.Response.Page + 1 })
       } else {
       <span>Next</span>
       }

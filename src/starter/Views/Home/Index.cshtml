@@ -22,7 +22,7 @@
   <ul>
   	@foreach (var document in Model.Response.Results) {
 	<li>
-		@Html.ActionLink(document.Slugs[0], "Detail", new { document.Id, slug = document.Slugs[0], refId })
+		@Html.ActionLink(document.Slug, "Detail", new { document.Id, slug = document.Slug, refId })
 	</li>
   	}  	
   </ul>
@@ -31,12 +31,12 @@
   @if(Model.Response.TotalPages > 1) {
     <div>
       @if(Model.Response.PrevPage != null) {
-      	@Html.ActionLink("Previous", "Index", new { refId, page = Model.Response.getPage() - 1 })
+      	@Html.ActionLink("Previous", "Index", new { refId, page = Model.Response.Page - 1 })
       } else {
       <span>Previous</span>
       }
       @if(Model.Response.NextPage != null) {
-      	@Html.ActionLink("Next", "Index", new { refId, page = Model.Response.getPage() + 1 })
+      	@Html.ActionLink("Next", "Index", new { refId, page = Model.Response.Page + 1 })
       } else {
       <span>Next</span>
       }
