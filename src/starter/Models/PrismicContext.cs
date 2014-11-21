@@ -32,17 +32,6 @@ namespace prismic.mvc.starter
 			return this.linkResolver.Resolve (document);
 		}
 
-
-		public IEnumerable<prismic.Ref> FutureReleasesRefs
-		{
-			get {
-				Func<DateTime?, Int64> mapScheduledAt = scheduledAt => scheduledAt.HasValue ? scheduledAt.Value.Ticks : 0;
-				return this.api.Refs
-					.Where (@ref => !@ref.IsMasterRef)
-					.OrderBy (@ref => mapScheduledAt (@ref.ScheduledAt))
-					.ToList ();
-			}
-		}
 	}
 }
 
