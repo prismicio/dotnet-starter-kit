@@ -19,36 +19,36 @@ namespace prismic.mvc.starter
 
 	public class PrismicSearchResponse : PrismicViewModel
 	{
-		readonly prismic.Api.Response response;
+		readonly prismic.Response response;
 		readonly string q;
 
-		public PrismicSearchResponse(PrismicContext ctx, prismic.Api.Response response, string q) : base(ctx)
+		public PrismicSearchResponse(PrismicContext ctx, prismic.Response response, string q) : base(ctx)
 		{
 			this.q = q;
 			this.response = response;
 		}
-		public prismic.Api.Response Response { get { return this.response; } }
+		public prismic.Response Response { get { return this.response; } }
 		public string Query { get { return this.q; } }
 	}
 
 	public class PrismicResponse : PrismicViewModel
 	{
-		readonly prismic.Api.Response response;
-		public PrismicResponse(PrismicContext ctx, prismic.Api.Response response) : base(ctx)
+		readonly prismic.Response response;
+		public PrismicResponse(PrismicContext ctx, prismic.Response response) : base(ctx)
 		{
 			this.response = response;
 		}
-		public prismic.Api.Response Response { get { return this.response; } }
+		public prismic.Response Response { get { return this.response; } }
 	}
 
 	public class PrismicDocument : PrismicViewModel
 	{
-		readonly prismic.Api.Document document;
-		public PrismicDocument(PrismicContext ctx, prismic.Api.Document document) : base(ctx)
+		readonly prismic.Document document;
+		public PrismicDocument(PrismicContext ctx, prismic.Document document) : base(ctx)
 		{
 			this.document = document;
 		}
-		public prismic.Api.Document Document { get { return this.document; } }
+		public prismic.Document Document { get { return this.document; } }
 
 		public string DocumentAsHtml
 		{

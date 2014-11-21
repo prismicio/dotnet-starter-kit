@@ -1,4 +1,4 @@
-﻿@using prismic.extensions
+﻿@using prismic
 @model prismic.mvc.starter.PrismicViewModel
 
 	<section>
@@ -11,6 +11,6 @@
 		</p>
 
 		<p>
-			@Html.ActionLink("Go to the home page", "Index", new { refId = Model.Context.MaybeRef.GetOrElse(null) })
+			@Html.ActionLink("Go to the home page", "Index", new { refId = Model.Context.MaybeRef })
 		</p>
 	</section>

@@ -23,16 +23,16 @@ namespace prismic.mvc.starter
 		{
 			get { return instance.Value; }
 		}
-		public void Set(string key, Api.Response response, DateTimeOffset expirationOffset)
+		public void Set(string key, Response response, DateTimeOffset expirationOffset)
 		{
 			cache.Set (key, response, expirationOffset);
 		}
-		public FSharpOption<Api.Response> Get(string key)
+		public FSharpOption<Response> Get(string key)
 		{
 			var value = cache.Get (key);
 			return value == null 
-				? FSharpOption<Api.Response>.None
-				: FSharpOption<Api.Response>.Some ((Api.Response)value);
+				? FSharpOption<Response>.None
+				: FSharpOption<Response>.Some ((Api.Response)value);
 		}
 	}
 		

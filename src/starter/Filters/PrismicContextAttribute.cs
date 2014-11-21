@@ -34,16 +34,13 @@ namespace prismic.mvc.starter
 		void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
 		{
 			var session = getSession (filterContext.HttpContext);
-
-			var accessToken = session.AccessToken.Exists () 
-				? session.AccessToken
-				: WebConfigurationManager.AppSettings.TryGet ("prismic.token");
+			var accessToken = WebConfigurationManager.AppSettings ["prismic.token"];
 
 			var api = this.apiHome.Get(accessToken)
-				.ContinueWith ((Task<prismic.Api.Api> getApi) => {
+				.ContinueWith ((Task<prismic.Api> getApi) => {
 					if (getApi.IsFaulted) { 
 						var innerException = getApi.Exception.Flatten ().InnerExceptions.FirstOrDefault ();
-						if (innerException is prismic.Api.AuthorizationNeeded || innerException is prismic.Api.InvalidToken)
+						if (innerException is prismic.Error || ((prismic.Error)innerException).Code == prismic.Error.ErrorCode.INVALID_TOKEN)
 						{
 							session.Clear();
 
@@ -55,10 +52,10 @@ namespace prismic.mvc.starter
 						}
 					} else {
 						string refId;
-						var maybeRef = 
+						string maybeRef = 
 							filterContext.HttpContext.Request.QueryString.TryGetValue("refId", out refId) 
-							? FSharpOption<string>.Some(refId)
-							: FSharpOption<string>.Some(getApi.Result.Master.refId);
+							? refId
+							: getApi.Result.Master.Reference;
 
 						filterContext.ActionParameters [contextParameterName] = 
 							new PrismicContext (getApi.Result, maybeRef, accessToken, 

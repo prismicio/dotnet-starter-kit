@@ -18,18 +18,21 @@ namespace prismic.mvc.starter
 				.ContinueWith (getApi => {
 					if (getApi.IsFaulted) { 
 						var innerException = getApi.Exception.Flatten ().InnerExceptions.FirstOrDefault ();
-						if (innerException is Api.AuthorizationNeeded)
-						{
-							return ((Api.AuthorizationNeeded)innerException).Data1;
+						if (innerException is prismic.Error) {
+							var prismicError = (prismic.Error)innerException;
+							if (prismicError.Code == prismic.Error.ErrorCode.AUTHORIZATION_NEEDED)
+							{
+								return prismicError.Message;
+							}
+							if (prismicError.Code == prismic.Error.ErrorCode.INVALID_TOKEN)
+							{
+								return prismicError.Message;
+							}
 						}
-						if (innerException is Api.InvalidToken)
-						{
-							return ((Api.InvalidToken)innerException).Data1; 
-						}
-						else throw getApi.Exception;
+						throw getApi.Exception;
 
 					} else {
-						return getApi.Result.OauthInitiateEndpoint;
+						return getApi.Result.;
 					}
 				});
 

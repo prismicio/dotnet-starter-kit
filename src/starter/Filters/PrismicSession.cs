@@ -17,14 +17,14 @@ namespace prismic.mvc.starter
 		public PrismicSession (HttpContextBase httpContext)
 		{
 			this.httpContext = httpContext;
-			this.timeoutMinutes = 
-				WebConfigurationManager.AppSettings.TryGet ("prismic.session.timeout.minutes")
-					.Map(mins => int.Parse(mins))
-					.GetOrElse<int> (TIMEOUT_MINS);
-			this.requiresSsl =
-				WebConfigurationManager.AppSettings.TryGet ("prismic.session.requireSSL")
-					.Map(requires => bool.Parse(requires))
-					.GetOrElse<bool> (true);
+			var timeoutSetting = WebConfigurationManager.AppSettings ["prismic.session.timeout.minutes"];
+			var sslSetting = WebConfigurationManager.AppSettings ["prismic.session.requireSSL"];
+			this.timeoutMinutes = timeoutSetting != null
+				? int.Parse (timeoutSetting)
+				: TIMEOUT_MINS;
+			this.requiresSsl = sslSetting != null
+				? bool.Parse (sslSetting)
+				: true;
 		}
 
 		public void Clear()
@@ -48,13 +48,13 @@ namespace prismic.mvc.starter
 			this.httpContext.Response.Cookies.Add(cookie);
 		}
 
-		public FSharpOption<string> AccessToken
+		public string AccessToken
 		{
 			get 
 			{ 
 				var cookie = this.httpContext.Request.Cookies [ACCESS_TOKEN]; 
 				return
-					cookie == null ? FSharpOption<string>.None : FSharpOption<string>.Some (cookie.Value); 
+					cookie == null ? null : cookie.Value;
 			}
 		}
 	}

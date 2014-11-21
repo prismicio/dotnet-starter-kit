@@ -88,13 +88,6 @@ namespace prismic.mvc.starter
 			throw new KeyNotFoundException ("key is missing : " + settingKey);
 		}
 
-		public static FSharpOption<string> TryGet(this NameValueCollection settings, string settingKey)
-		{
-			var setting = settings[settingKey];
-			return !string.IsNullOrEmpty (setting) 
-				? FSharpOption<string>.Some(setting)
-				: FSharpOption<string>.None;
-		}
 	}
 }
 

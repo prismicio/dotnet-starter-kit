@@ -1,6 +1,6 @@
-﻿@using prismic.extensions
+﻿@using prismic
 @model prismic.mvc.starter.PrismicViewModel
-@{string refId = Model.Context.MaybeRef.Exists() ? Model.Context.MaybeRef.Value : null;}
+@{string refId = Model.Context.MaybeRef;}
 
 <!DOCTYPE html>
 <html>
@@ -12,16 +12,10 @@
      
 </head>
 <body>
-	<header>		
-		@{Html.RenderPartial("Toolbar");}
+	<header>
 		<h1>@Html.ActionLink("Your prismic.io project", "Index", new { refId })</h1>
 	</header>
 	@RenderBody()
-	<footer>
-		@if(!@Model.Context.HasPrivilegedAccess) {
-		<hr /> @Html.ActionLink("Sign in to preview changes", "Signin") 
-		}
-	</footer>
 </body>
 </html>
 

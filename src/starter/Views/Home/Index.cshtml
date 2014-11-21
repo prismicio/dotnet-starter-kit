@@ -1,6 +1,6 @@
-﻿@using prismic.extensions
+﻿@using prismic
 @model prismic.mvc.starter.PrismicResponse
-@{string refId = Model.Context.MaybeRef.GetOrElse(null);}
+@{string refId = Model.Context.MaybeRef;}
 
 @using (Html.BeginForm("Search", "Home", new { refId }, FormMethod.Post )){
 	@Html.TextBox("q")
@@ -9,34 +9,34 @@
   <hr />
 
   <h2>
-	@switch (Model.Response.resultsSize)
+	@switch (Model.Response.Results.Count)
 	{
 	    case 0: @:No documents found
 	    break;
 	    case 1: @:One document found
 	    break;
-	    default: @:Showing @Model.Response.resultsSize out of @Model.Response.totalResultsSize documents
+	    default: @:Showing @Model.Response.Results.Count out of @Model.Response.TotalResultsSize documents
 	    break;
 	}
   </h2>
   <ul>
-  	@foreach (var document in Model.Response.results) {
+  	@foreach (var document in Model.Response.Results) {
 	<li>
-		@Html.ActionLink(document.slug, "Detail", new { document.id, document.slug, refId })
+		@Html.ActionLink(document.Slugs[0], "Detail", new { document.Id, slug = document.Slugs[0], refId })
 	</li>
   	}  	
   </ul>
 
 
-  @if(Model.Response.totalPages > 1) {
+  @if(Model.Response.TotalPages > 1) {
     <div>
-      @if(Model.Response.prevPage.Exists()) {
-      	@Html.ActionLink("Previous", "Index", new { refId, page = Model.Response.page - 1 })
+      @if(Model.Response.PrevPage != null) {
+      	@Html.ActionLink("Previous", "Index", new { refId, page = Model.Response.getPage() - 1 })
       } else {
       <span>Previous</span>
       }
-      @if(Model.Response.nextPage.Exists()) {
-      	@Html.ActionLink("Next", "Index", new { refId, page = Model.Response.page + 1 })
+      @if(Model.Response.NextPage != null) {
+      	@Html.ActionLink("Next", "Index", new { refId, page = Model.Response.getPage() + 1 })
       } else {
       <span>Next</span>
       }
