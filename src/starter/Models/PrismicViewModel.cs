@@ -1,6 +1,5 @@
 ﻿using System;
 using prismic;
-using prismic.extensions;
 
 namespace prismic.mvc.starter
 {

@@ -2,7 +2,6 @@
 using System.Web;
 using System.Web.Configuration;
 using Microsoft.FSharp.Core;
-using prismic.extensions;
 
 namespace prismic.mvc.starter
 {

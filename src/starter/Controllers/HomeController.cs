@@ -1,6 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
-using prismic.extensions;
 using prismic.mvc.starter;
 
 namespace prismic.mvc.starter.Controllers
@@ -10,21 +11,18 @@ namespace prismic.mvc.starter.Controllers
 		[PrismicContext("ctx")]
 		public ActionResult Index (PrismicContext ctx, int page = 1)
 		{
-			System.Diagnostics.Debug.WriteLine("yo, index");
-
 			var futureResponse = ctx.Api.Form("everything").Ref (ctx.MaybeRef).PageSize (10).Page (page)
-				.Submit (); 
-				
+				.Submit ();
 			ViewBag.Title = "All documents";
 			var model = new PrismicResponse(ctx, futureResponse.Result);
 			return View (model);
 		}
 
 		[PrismicContext("ctx")]
-		public ActionResult Detail(PrismicContext ctx, string id, string slug, string refId)
+		public ActionResult Detail(PrismicContext ctx, string id, string slug)
 		{
 			var futureResponse = ctx.Api.Form("everything")
-				.Query(string.Format(@"[[:d = at(document.id, ""{0}"")]]", id))
+				.Query(Predicates.at("document.id", id))
 				.Ref (ctx.MaybeRef)
 				.Submit (); 
 
@@ -34,7 +32,7 @@ namespace prismic.mvc.starter.Controllers
 				return View (new PrismicDocument (ctx, document));
 			}
 			else if (document != null && document.Slugs.Contains(slug)) {
-				return RedirectToActionPermanent ("Detail", new { id, document.Slug, refId });
+				return RedirectToActionPermanent ("Detail", new { id, document.Slug });
 			} else {
 				ViewBag.Title = "Document not found";
 				this.Response.StatusCode = 404;
@@ -42,9 +40,9 @@ namespace prismic.mvc.starter.Controllers
 			}
 		}
 
-		public ActionResult BrokenLink(string refId)
+		public ActionResult BrokenLink()
 		{
-			return RedirectToAction ("PageNotFound", new { refId });
+			return RedirectToAction ("PageNotFound");
 		}
 
 		[PrismicContext("ctx")]
@@ -59,12 +57,22 @@ namespace prismic.mvc.starter.Controllers
 		{
 			var query = string.IsNullOrWhiteSpace (q) ? string.Empty : q;
 			var futureResponse = ctx.Api.Form("everything")
-				.Query(string.Format(@"[[:d = fulltext(document, ""{0}"")]]", query))
+				.Query(Predicates.fulltext("document", query))
 				.Ref (ctx.MaybeRef).PageSize (10).Page (page)
 				.Submit (); 
 
 			ViewBag.Title = "Search results";
 			return View (new PrismicSearchResponse(ctx, futureResponse.Result, q));
+		}
+
+		[PrismicContext("ctx")]
+		public ActionResult Preview(PrismicContext ctx, string token)
+		{
+			string url = ctx.Api.PreviewSession (token, ctx.LinkResolver, "/").Result;
+			var cookie = new HttpCookie (prismic.Api.PREVIEW_COOKIE, token);
+			cookie.Expires = DateTime.Now.AddMinutes (30);
+			this.ControllerContext.HttpContext.Response.SetCookie (cookie);
+			return Redirect (url);
 		}
 
 	}

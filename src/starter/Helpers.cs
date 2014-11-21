@@ -10,7 +10,6 @@ using System.Web.Routing;
 using FSharp.Data;
 using Microsoft.FSharp.Core;
 using prismic;
-using prismic.extensions;
 
 namespace prismic.mvc.starter
 {

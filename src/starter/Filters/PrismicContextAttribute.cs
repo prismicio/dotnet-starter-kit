@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Microsoft.FSharp.Core;
 using prismic;
-using prismic.extensions;
 
 namespace prismic.mvc.starter
 {
@@ -51,14 +50,15 @@ namespace prismic.mvc.starter
 							throw getApi.Exception;
 						}
 					} else {
-						string refId;
-						string maybeRef = 
-							filterContext.HttpContext.Request.QueryString.TryGetValue("refId", out refId) 
-							? refId
+						HttpCookie previewCookie =
+							filterContext.HttpContext.Request.Cookies.Get(prismic.Api.PREVIEW_COOKIE);
+						string maybeRef = (previewCookie != null && previewCookie.Value != "")
+							? previewCookie.Value
 							: getApi.Result.Master.Reference;
+						Console.WriteLine("Got ref = " + maybeRef);
 
 						filterContext.ActionParameters [contextParameterName] = 
-							new PrismicContext (getApi.Result, maybeRef, accessToken, 
+							new PrismicContext (getApi.Result, maybeRef, 
 								PrismicLinkResolver.Get(getApi.Result, maybeRef, filterContext.RequestContext));
 						return filterContext;
 					}

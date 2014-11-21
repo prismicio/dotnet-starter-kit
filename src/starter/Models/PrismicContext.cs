@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Collections.Generic;
 using prismic;
-using prismic.extensions;
 
 namespace prismic.mvc.starter
 {
@@ -10,16 +9,14 @@ namespace prismic.mvc.starter
 	{
 		readonly prismic.Api api;
 		readonly string maybeRef;
-		readonly string maybeAccessToken;
 		readonly prismic.DocumentLinkResolver linkResolver;
 
 		public PrismicContext(){}
 
-		public PrismicContext(prismic.Api api, string maybeRef, string maybeAccessToken, prismic.DocumentLinkResolver linkResolver)
+		public PrismicContext(prismic.Api api, string maybeRef, prismic.DocumentLinkResolver linkResolver)
 		{
 			this.api = api;
 			this.maybeRef = maybeRef;
-			this.maybeAccessToken = maybeAccessToken;
 			this.linkResolver = linkResolver;
 		}
 		public prismic.Api Api { get { return this.api; } }

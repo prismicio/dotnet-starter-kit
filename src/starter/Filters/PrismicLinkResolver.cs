@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Microsoft.FSharp.Core;
 using prismic;
-using prismic.extensions;
 
 namespace prismic.mvc.starter
 {
@@ -15,8 +14,8 @@ namespace prismic.mvc.starter
 			return prismic.DocumentLinkResolver.For (
 				(documentLink) =>
 				!documentLink.IsBroken 
-				? requestContext.RouteUrlFor("Detail", "Home", new { documentLink.Id, documentLink.Slug, refId=maybeRef })
-				: requestContext.RouteUrlFor("BrokenLink", "Home", new { refId=maybeRef })
+				? requestContext.RouteUrlFor("Detail", "Home", new { documentLink.Id, documentLink.Slug })
+				: requestContext.RouteUrlFor("BrokenLink", "Home", new {})
 			);
 		}
 	}

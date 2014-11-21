@@ -3,7 +3,6 @@ using System.Web.Configuration;
 using System.Diagnostics.Contracts;
 using Microsoft.FSharp.Core;
 using System.Threading.Tasks;
-using prismic.extensions;
 
 namespace prismic.mvc.starter
 {
@@ -32,13 +31,13 @@ namespace prismic.mvc.starter
 			return new PrismicApiHome (WebConfigurationManager.AppSettings.GetOrThrow ("prismic.api.url"));
 		}
 
-		public Task<prismic.Api> Get(string accessToken)
+		public async Task<prismic.Api> Get(string accessToken)
 		{
-			return prismic.Api.Get (this.apiUrl, accessToken, new prismic.DefaultCache(), new PrismicLogger());
+			return await prismic.Api.Get (this.apiUrl, accessToken, new prismic.DefaultCache(), new PrismicLogger());
 		}
-		public Task<prismic.Api> Get()
+		public async Task<prismic.Api> Get()
 		{
-			return this.Get (null);
+			return await this.Get (null);
 		}
 	}
 }
