@@ -120,9 +120,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Filters\PrismicApiHome.cs" />
-    <Compile Include="Filters\PrismicContextAttribute.cs" />
     <Compile Include="Filters\PrismicLinkResolver.cs" />
-    <Compile Include="Filters\PrismicSession.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Models\PrismicContext.cs" />
     <Compile Include="Models\PrismicViewModel.cs" />
