@@ -6,9 +6,10 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
-    <link rel="stylesheet" media="screen" href="@Url.Content("~/Content/main.css")" />
-    <link rel="shortcut icon" type="image/png" href="@Url.Content("~/Content/favicon.png")" />
-    <script src="@Url.Content("~/Scripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@Styles.Render("~/Content/css")
+	<link rel="shortcut icon" type="image/png" href="@Url.Content("~/favicon.ico")" />
     @** Required for Previews and Experiments *@
     <script src="//static.cdn.prismic.io/prismic.min.js"></script>
 </head>
