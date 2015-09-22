@@ -21,15 +21,6 @@ namespace prismic.mvc.starter
 			this.apiUrl = apiUrl;
 		}
 
-		/// <summary>
-		/// Returns an entry point for prismic.io API, gets the params froms the config.
-		/// </summary>
-		/// <returns>The config.</returns>
-		public static PrismicApiHome FromConfig()
-		{
-			return new PrismicApiHome (WebConfigurationManager.AppSettings.Get ("prismic.api.url"));
-		}
-
 		public async Task<prismic.Api> Get(string accessToken)
 		{
 			return await prismic.Api.Get (this.apiUrl, accessToken, new prismic.DefaultCache(), new PrismicLogger());

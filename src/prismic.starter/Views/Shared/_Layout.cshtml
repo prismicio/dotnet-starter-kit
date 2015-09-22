@@ -1,6 +1,7 @@
 ﻿@using prismic
 @model prismic.mvc.starter.PrismicViewModel
 @{string refId = Model.Context.MaybeRef;}
+@{string endpoint = Model.Context.Endpoint;}
 
 <!DOCTYPE html>
 <html>
@@ -11,6 +12,11 @@
 	@Styles.Render("~/Content/css")
 	<link rel="shortcut icon" type="image/png" href="@Url.Content("~/favicon.ico")" />
     @** Required for Previews and Experiments *@
+    <script>
+        window.prismic = {
+            endpoint: '@endpoint'
+        };
+    </script>
     <script src="//static.cdn.prismic.io/prismic.min.js"></script>
 </head>
 <body>

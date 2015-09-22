@@ -1,7 +1,7 @@
 ﻿@using prismic
 @model prismic.mvc.starter.PrismicDocument
 
-<article id="@Model.Document.Id">
-  @Html.Raw(Model.DocumentAsHtml)
+<article id="@Model.Document.Id" data-wio-id="@Model.Document.Id">
+    @Html.Raw(Model.DocumentAsHtml)
 </article>
 

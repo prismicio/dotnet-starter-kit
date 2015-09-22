@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using prismic.mvc.starter;
 using System.Threading.Tasks;
@@ -74,16 +75,17 @@ namespace prismic.mvc.starter.Controllers
 			this.ControllerContext.HttpContext.Response.SetCookie (cookie);
 			return Redirect (url);
 		}
-
-        private async Task<PrismicContext> getContext()
-        {
-            var api = await PrismicApiHome.FromConfig().Get();
-            HttpCookie previewCookie = HttpContext.Request.Cookies.Get(prismic.Api.PREVIEW_COOKIE);
-            string maybeRef = (previewCookie != null && previewCookie.Value != "")
-                ? previewCookie.Value
-                : api.Master.Reference;
-            return new PrismicContext(api, maybeRef, PrismicLinkResolver.Get(api, maybeRef, ControllerContext.RequestContext));
-        }
+		
+		private async Task<PrismicContext> getContext()
+		{
+			var endpoint = WebConfigurationManager.AppSettings.Get("prismic.api.url");
+			var api = await new PrismicApiHome(endpoint).Get();
+			HttpCookie previewCookie = HttpContext.Request.Cookies.Get(prismic.Api.PREVIEW_COOKIE);
+			string maybeRef = (previewCookie != null && previewCookie.Value != "")
+				? previewCookie.Value
+				: api.Master.Reference;
+			return new PrismicContext(endpoint, api, maybeRef, PrismicLinkResolver.Get(api, maybeRef, ControllerContext.RequestContext));
+		}
 	}
 
 
