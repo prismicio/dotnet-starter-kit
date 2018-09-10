@@ -69,7 +69,7 @@ namespace prismic.mvc.starter.Controllers
 		public async Task<ActionResult> Preview(string token)
 		{
             var ctx = await getContext();
-			string url = ctx.Api.PreviewSession (token, ctx.LinkResolver, "/").Result;
+			string url = await ctx.Api.PreviewSession (token, ctx.LinkResolver, "/");
 			var cookie = new HttpCookie (prismic.Api.PREVIEW_COOKIE, token);
 			cookie.Expires = DateTime.Now.AddMinutes (30);
 			this.ControllerContext.HttpContext.Response.SetCookie (cookie);
